@@ -2,22 +2,31 @@ package main.java.beans;
 
 
 public class Table {
-    private String title;
+    private int id;
+    private String name;
 
-    public Table(String title) {
-        this.title = title;
+    public Table(String name) {
+        this.name = name;
     }
 
-    public String getTitle() {
-        return title;
+    public int getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return title;
+        return this.name;
     }
 }
