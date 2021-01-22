@@ -2,18 +2,24 @@ package main.java.beans;
 
 
 public class Table {
-    private int id;
+    private String id;
     private String name;
+    private Boolean archived;
 
     public Table(String name) {
         this.name = name;
     }
 
-    public int getId() {
+    public Table(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -23,6 +29,14 @@ public class Table {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 
     @Override
