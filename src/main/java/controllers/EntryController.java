@@ -8,19 +8,24 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.java.beans.Entry;
 import main.java.beans.Table;
 import main.java.constants.EntryConstants;
+import main.java.constants.MessageConstants;
 import main.java.daos.EntryDAOImpl;
+import main.java.utility.Utility;
+
+import java.util.Objects;
 
 public class EntryController {
+
+    EntryDAOImpl entryDAO = new EntryDAOImpl();
+    private Table parentTable;
+    private ObservableList<Entry> entryList = FXCollections.observableArrayList();
 
     @FXML
     public Text tableId;
@@ -28,6 +33,8 @@ public class EntryController {
     public Text tableName;
     @FXML
     public TextField entrySearch;
+    @FXML
+    public Text status;
     @FXML
     public TableView<Entry> viewTable;
     @FXML
@@ -37,16 +44,10 @@ public class EntryController {
     @FXML
     public TableColumn<Entry, String> descCol;
 
-    EntryDAOImpl entryDAO = new EntryDAOImpl();
-    private Table parentTable;
-    private ObservableList<Entry> entryList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        keyCol.setCellValueFactory(new PropertyValueFactory<>(EntryConstants.KEY));
-        valCol.setCellValueFactory(new PropertyValueFactory<>(EntryConstants.VALUE));
-        descCol.setCellValueFactory(
-                new PropertyValueFactory<>(EntryConstants.DESCRIPTION));
+        initializeTableCols();
     }
 
     @FXML
@@ -74,8 +75,24 @@ public class EntryController {
 
     @FXML
     public void itemSelected(KeyEvent keyEvent) {
+        Entry selected = viewTable.getSelectionModel().getSelectedItem();
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             closeStage();
+            keyEvent.consume();
+        } else if (keyEvent.getCode() == KeyCode.ENTER) {
+            handleUpdate(selected);
+        } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            if (Utility.setToClipboard(selected.getValue())) {
+                status.setText(selected.getValue());
+                keyEvent.consume();
+            }
+        } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN).match(keyEvent)) {
+            if (Utility.setToClipboard(selected.getKey())) {
+                status.setText(selected.getKey());
+                keyEvent.consume();
+            }
+        } else if (new KeyCodeCombination(KeyCode.DELETE, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            handleDeleteEntry(selected);
             keyEvent.consume();
         }
     }
@@ -85,6 +102,12 @@ public class EntryController {
         tableId.setText(parentTable.getId());
         tableName.setText(parentTable.getName());
         populateTable();
+    }
+
+    private void initializeTableCols() {
+        keyCol.setCellValueFactory(new PropertyValueFactory<>(EntryConstants.KEY));
+        valCol.setCellValueFactory(new PropertyValueFactory<>(EntryConstants.VALUE));
+        descCol.setCellValueFactory(new PropertyValueFactory<>(EntryConstants.DESCRIPTION));
     }
 
     private void populateTable() {
@@ -102,8 +125,19 @@ public class EntryController {
     }
 
     private void handleNewInsertion(String keyword) {
+        configureDialog("Add New Entry under " + parentTable.getName(), "ADD", keyword, null, "ADD");
+    }
+
+    private void handleUpdate(Entry entry) {
+        configureDialog("Update Entry", "UPDATE", "", entry, "UPDATE");
+    }
+
+    private void configureDialog(String title, String btnTitle, String keyword, Entry entry, String action) {
+        title = title.isBlank() ? "Add New Entry" : title;
+        btnTitle = btnTitle.isBlank() ? "ADD" : btnTitle;
+        keyword = keyword.isBlank() ? entry.getKey() : keyword;
         Dialog<Entry> dialog = new Dialog<>();
-        dialog.setTitle("Add New Entry under " + parentTable.getName());
+        dialog.setTitle(title);
         dialog.setHeaderText(null);
         dialog.setGraphic(null);
         GridPane gridPane = new GridPane();
@@ -111,7 +145,7 @@ public class EntryController {
         gridPane.setVgap(10);
         gridPane.setPrefWidth(500);
         gridPane.setAlignment(Pos.CENTER);
-        ButtonType addBtn = new ButtonType("ADD", ButtonBar.ButtonData.OK_DONE);
+        ButtonType addBtn = new ButtonType(btnTitle, ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, addBtn);
         Node addBtnControl = dialog.getDialogPane().lookupButton(addBtn);
 
@@ -126,6 +160,12 @@ public class EntryController {
         desc.setPromptText(EntryConstants.DESCRIPTION);
         desc.setPrefWidth(300);
         desc.setPrefHeight(50);
+
+        if (Objects.nonNull(entry)) {
+            key.setText(entry.getKey());
+            value.setText(entry.getValue());
+            desc.setText(entry.getDescription());
+        }
 
         gridPane.add(new Label(EntryConstants.KEY.toUpperCase()), 0, 0);
         gridPane.add(key, 1, 0);
@@ -142,7 +182,12 @@ public class EntryController {
             return null;
         });
         dialog.showAndWait()
-                .ifPresent(this::addNewEntry);
+                .ifPresent(resultEntry -> {
+                    if (action.equalsIgnoreCase("ADD"))
+                        addNewEntry(resultEntry);
+                    else
+                        updateEntry(entry, resultEntry);
+                });
     }
 
     private void addNewEntry(Entry entry) {
@@ -151,6 +196,34 @@ public class EntryController {
             entryDAO.addEntry(entry);
         }
         refreshScene();
+    }
+
+    private void updateEntry(Entry oldEntry, Entry newEntry) {
+        if (!oldEntry.getId().isBlank()) {
+            newEntry.setTableId(oldEntry.getTableId());
+            if (entryDAO.updateEntry(oldEntry, newEntry))
+                refreshScene();
+        }
+    }
+
+    private void deleteEntry(Entry entry) {
+        if (entryDAO.deleteEntry(entry))
+            refreshScene();
+    }
+
+    private void handleDeleteEntry(Entry entry) {
+        configureAlert(MessageConstants.DELETE_TABLE_DIALOG_LABEL + entry.getKey() + " field?")
+                .showAndWait()
+                .filter(response -> response == ButtonType.YES)
+                .ifPresent(response -> deleteEntry(entry));
+    }
+
+    private Alert configureAlert(String context) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+        alert.setContentText(context);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        return alert;
     }
 
     private void refreshScene() {

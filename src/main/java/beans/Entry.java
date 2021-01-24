@@ -6,6 +6,7 @@ public class Entry {
     private String value;
     private String description;
     private String tableId;
+    private Boolean archved;
 
     public Entry(String id, String key, String value, String description, String tableId) {
         this.id = id;
@@ -59,6 +60,14 @@ public class Entry {
 
     public void setTableId(String tableId) {
         this.tableId = tableId;
+    }
+
+    public Boolean getArchved() {
+        return archved;
+    }
+
+    public void setArchved(Boolean archved) {
+        this.archved = archved;
     }
 
     @Override

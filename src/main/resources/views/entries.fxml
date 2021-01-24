@@ -13,12 +13,14 @@
       <Separator layoutX="20.0" layoutY="56.0" prefHeight="3.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Text fx:id="tableName" layoutX="20.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="63.93310546875" />
       <Text fx:id="tableId" layoutX="551.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.2705078125" AnchorPane.topAnchor="64.93310546875" />
-      <TableView fx:id="viewTable" layoutY="85.0" onKeyPressed="#itemSelected" prefHeight="315.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+      <TableView fx:id="viewTable" layoutY="85.0" onKeyPressed="#itemSelected" prefHeight="315.0" prefWidth="600.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
         <columns>
             <TableColumn fx:id="keyCol" minWidth="100.0" prefWidth="250.0" text="KEY" />
             <TableColumn fx:id="valCol" minWidth="100.0" prefWidth="450.0" text="VALUE" />
             <TableColumn fx:id="descCol" minWidth="0.0" prefWidth="245.0" text="DESCRIPTION" />
         </columns>
       </TableView>
+       <Text fill="#909090" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clipboard:" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="10.0" />
+       <Text fx:id="status" fill="#909090" layoutX="88.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="83.0" />
    </children>
 </AnchorPane>

@@ -3,7 +3,6 @@ package main.java.daos;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import javafx.scene.control.Tab;
 import main.java.beans.Table;
 import main.java.constants.MessageConstants;
 import main.java.constants.MongoConstants;

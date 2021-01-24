@@ -11,12 +11,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.beans.Table;
 import main.java.constants.MessageConstants;
-import main.java.constants.TableConstants;
 import main.java.daos.TableDAOImpl;
+import main.java.utility.Utility;
 
 import java.util.Objects;
 
@@ -32,6 +33,8 @@ public class RootController {
     public TextField search;
     @FXML
     public ListView<Table> viewList;
+    @FXML
+    public Text status;
 
     @FXML
     public void initialize() {
@@ -51,7 +54,11 @@ public class RootController {
             if (Objects.nonNull(selected))
                 System.out.println(selected.toString());
             loadEntryWindow(selected);
-        } else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+        } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            Table selected = viewList.getSelectionModel().getSelectedItem();
+            if (Utility.setToClipboard(selected.getName()))
+                status.setText(selected.getName());
+        }else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
             closeStage();
         }
     }
@@ -136,9 +143,7 @@ public class RootController {
         configureAlert(MessageConstants.DELETE_TABLE_DIALOG_LABEL + selectCell.getName() + "?")
                 .showAndWait()
                 .filter(response -> response == ButtonType.YES)
-                .ifPresent(response -> {
-                    deleteTable(selectCell);
-                });
+                .ifPresent(response -> deleteTable(selectCell));
 
     }
 
