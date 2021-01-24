@@ -1,4 +1,4 @@
-package main.java.controllers;
+package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,10 +14,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.java.beans.Table;
-import main.java.constants.MessageConstants;
-import main.java.daos.TableDAOImpl;
-import main.java.utility.Utility;
+import beans.Table;
+import constants.MessageConstants;
+import daos.TableDAOImpl;
+import utility.Utility;
 
 import java.util.Objects;
 
@@ -27,7 +27,7 @@ public class RootController {
     ObservableList<Table> list = FXCollections.observableArrayList();
     TableDAOImpl tableDAO = new TableDAOImpl();
 
-    public static final String ENTRIES_VIEW_PATH = "/main/resources/views/entries.fxml";
+    public static final String ENTRIES_VIEW_PATH = "/views/entries.fxml";
 
     @FXML
     public TextField search;
@@ -51,8 +51,8 @@ public class RootController {
             keyEvent.consume();
         } else if (keyEvent.getCode() == KeyCode.ENTER) {
             Table selected = viewList.getSelectionModel().getSelectedItem();
-            if (Objects.nonNull(selected))
-                System.out.println(selected.toString());
+//            if (Objects.nonNull(selected))
+//                System.out.println(selected.toString());
             loadEntryWindow(selected);
         } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
             Table selected = viewList.getSelectionModel().getSelectedItem();

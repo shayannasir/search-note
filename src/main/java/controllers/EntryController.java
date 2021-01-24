@@ -1,4 +1,4 @@
-package main.java.controllers;
+package controllers;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,12 +12,12 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.java.beans.Entry;
-import main.java.beans.Table;
-import main.java.constants.EntryConstants;
-import main.java.constants.MessageConstants;
-import main.java.daos.EntryDAOImpl;
-import main.java.utility.Utility;
+import beans.Entry;
+import beans.Table;
+import constants.EntryConstants;
+import constants.MessageConstants;
+import daos.EntryDAOImpl;
+import utility.Utility;
 
 import java.util.Objects;
 

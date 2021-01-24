@@ -1,4 +1,4 @@
-package main.java.constants;
+package constants;
 
 public class EntryConstants {
     public static final String ID = "_id";

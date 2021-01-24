@@ -1,4 +1,4 @@
-package main.java.constants;
+package constants;
 
 /*
 * Stored mongo keywords as constants

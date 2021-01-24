@@ -1,4 +1,4 @@
-package main.java.constants;
+package constants;
 
 public class MessageConstants {
     public static final String HOME = "Search Note";

@@ -1,4 +1,4 @@
-package main.java.constants;
+package constants;
 
 /*
 * Stores Table Collection's attributes as constants

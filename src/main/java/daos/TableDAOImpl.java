@@ -1,14 +1,14 @@
-package main.java.daos;
+package daos;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import main.java.beans.Table;
-import main.java.constants.MessageConstants;
-import main.java.constants.MongoConstants;
-import main.java.constants.PropertyConstants;
-import main.java.constants.TableConstants;
-import main.resources.persistence.DBManager;
+import beans.Table;
+import constants.MessageConstants;
+import constants.MongoConstants;
+import constants.PropertyConstants;
+import constants.TableConstants;
+import persistence.DBManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 

@@ -1,6 +1,6 @@
-package main.java.daos;
+package daos;
 
-import main.java.beans.Table;
+import beans.Table;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package main.resources.persistence;
+package persistence;
 
 import com.mongodb.ConnectionString;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import main.java.constants.PropertyConstants;
+import constants.PropertyConstants;
 
 import java.util.Objects;
 

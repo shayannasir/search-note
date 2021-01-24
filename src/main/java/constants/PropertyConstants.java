@@ -1,4 +1,4 @@
-package main.java.constants;
+package constants;
 
 public class PropertyConstants {
     public static final String MONGO_HOST = "localhost";

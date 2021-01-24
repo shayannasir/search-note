@@ -1,18 +1,17 @@
-package main.java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.constants.MessageConstants;
+import constants.MessageConstants;
 
 import java.io.IOException;
 
 public class SearchNote extends Application {
 
-    public static final String ENTRY_VIEW_PATH = "/main/resources/views/entries.fxml";
-    public static final String TABLE_VIEW_PATH = "/main/resources/views/root.fxml";
+    public static final String ENTRY_VIEW_PATH = "/views/entries.fxml";
+    public static final String TABLE_VIEW_PATH = "/views/root.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
