@@ -10,6 +10,10 @@ import main.java.constants.MessageConstants;
 import java.io.IOException;
 
 public class SearchNote extends Application {
+
+    public static final String ENTRY_VIEW_PATH = "/main/resources/views/entries.fxml";
+    public static final String TABLE_VIEW_PATH = "/main/resources/views/root.fxml";
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -38,7 +42,12 @@ public class SearchNote extends Application {
     }
 
     private Scene loadTableScene() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/resources/views/root.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(TABLE_VIEW_PATH));
         return new Scene(root);
+    }
+
+    private Scene loadEntryScene() throws IOException {
+        Parent entry = FXMLLoader.load(getClass().getResource(ENTRY_VIEW_PATH));
+        return new Scene(entry);
     }
 }

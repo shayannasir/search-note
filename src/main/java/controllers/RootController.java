@@ -3,13 +3,21 @@ package main.java.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.java.beans.Table;
+import main.java.constants.MessageConstants;
 import main.java.constants.TableConstants;
 import main.java.daos.TableDAOImpl;
 
-import java.security.Key;
 import java.util.Objects;
 
 
@@ -17,6 +25,8 @@ public class RootController {
 
     ObservableList<Table> list = FXCollections.observableArrayList();
     TableDAOImpl tableDAO = new TableDAOImpl();
+
+    public static final String ENTRIES_VIEW_PATH = "/main/resources/views/entries.fxml";
 
     @FXML
     public TextField search;
@@ -40,6 +50,9 @@ public class RootController {
             Table selected = viewList.getSelectionModel().getSelectedItem();
             if (Objects.nonNull(selected))
                 System.out.println(selected.toString());
+            loadEntryWindow(selected);
+        } else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            closeStage();
         }
     }
 
@@ -59,6 +72,10 @@ public class RootController {
         if (!entry.isBlank()) {
             if (new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
                 handleNewInsertion(entry);
+                keyEvent.consume();
+            } else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+                // not working rn
+                closeStage();
                 keyEvent.consume();
             }
         }
@@ -99,7 +116,7 @@ public class RootController {
     private void handleNewInsertion(String keyword) {
         Alert confirmationAlert = configureAlert("Add '" + keyword + "' table?");
         confirmationAlert.showAndWait()
-                .filter(response -> response ==  ButtonType.YES)
+                .filter(response -> response == ButtonType.YES)
                 .ifPresent(response -> {
                     addNewTable(new Table(keyword));
                 });
@@ -107,7 +124,7 @@ public class RootController {
 
     private void handleTableUpdate() {
         Table selectCell = viewList.getSelectionModel().getSelectedItem();
-        TextInputDialog updateDialog = configureInputDialog(selectCell.getName(), TableConstants.UPDATE_DIALOG_LABEL);
+        TextInputDialog updateDialog = configureInputDialog(selectCell.getName(), MessageConstants.UPDATE_TABLE_DIALOG_LABEL);
         updateDialog.showAndWait()
                 .ifPresent(response -> {
                     updateTable(selectCell, new Table(response));
@@ -116,12 +133,30 @@ public class RootController {
 
     private void handleTableDelete() {
         Table selectCell = viewList.getSelectionModel().getSelectedItem();
-        configureAlert(TableConstants.DELETE_DIALOG_LABEL + selectCell.getName() + "?")
+        configureAlert(MessageConstants.DELETE_TABLE_DIALOG_LABEL + selectCell.getName() + "?")
                 .showAndWait()
                 .filter(response -> response == ButtonType.YES)
                 .ifPresent(response -> {
                     deleteTable(selectCell);
                 });
+
+    }
+
+    private void loadEntryWindow(Table table) {
+        Stage entryStage = new Stage();
+        entryStage.initModality(Modality.APPLICATION_MODAL);
+        entryStage.initOwner(viewList.getScene().getWindow());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ENTRIES_VIEW_PATH));
+            Parent entryScene = loader.load();
+            EntryController entryController = loader.getController();
+            entryController.setParentTable(table);
+            entryStage.setScene(new Scene(entryScene));
+            entryStage.centerOnScreen();
+            entryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -139,6 +174,11 @@ public class RootController {
         textInputDialog.setGraphic(null);
         textInputDialog.setContentText(context);
         return textInputDialog;
+    }
+
+    private void closeStage() {
+        Stage activeStage = (Stage) viewList.getScene().getWindow();
+        activeStage.close();
     }
 
     private void refreshScene() {

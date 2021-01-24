@@ -3,7 +3,10 @@ package main.java.daos;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import javafx.scene.control.Tab;
 import main.java.beans.Table;
+import main.java.constants.MessageConstants;
+import main.java.constants.MongoConstants;
 import main.java.constants.PropertyConstants;
 import main.java.constants.TableConstants;
 import main.resources.persistence.DBManager;
@@ -23,10 +26,10 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public List<Table> findAllByKeyword(String keyword) {
         List<Table> tableList = new ArrayList<>();
-        FindIterable<Document> query = tables.find(new Document("name", new Document("$regex", keyword).append("$options", "i"))).sort(new Document("name", 1));
+        FindIterable<Document> query = tables.find(new Document(TableConstants.NAME, new Document(MongoConstants.REGEX, keyword).append(MongoConstants.OPTIONS, "i"))).sort(new Document(TableConstants.NAME, 1));
         for (Document document : query) {
-            String name = document.get("name").toString();
-            String id = document.get("_id").toString();
+            String name = document.get(TableConstants.NAME).toString();
+            String id = document.get(TableConstants.ID).toString();
             tableList.add(new Table(id, name));
         }
         return tableList;
@@ -35,9 +38,9 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public List<Table> findAll() {
         List<Table> tableList = new ArrayList<>();
-        for (Document document : tables.find().sort(new Document("name", 1))) {
-            String name = document.get("name").toString();
-            String id = document.get("_id").toString();
+        for (Document document : tables.find().sort(new Document(TableConstants.NAME, 1))) {
+            String name = document.get(TableConstants.NAME).toString();
+            String id = document.get(TableConstants.ID).toString();
             tableList.add(new Table(id, name));
         }
         return tableList;
@@ -51,7 +54,7 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public Boolean addTable(Table newTable) {
         try {
-            tables.insertOne(new Document("name", newTable.getName()));
+            tables.insertOne(new Document(TableConstants.NAME, newTable.getName()));
             return true;
         } catch (Exception e) {
             return false;
@@ -63,7 +66,7 @@ public class TableDAOImpl implements TableDAO {
         if (Objects.nonNull(oldTable) && Objects.nonNull(newTable)) {
             return tables.updateOne(
                     new Document(TableConstants.ID, new ObjectId(oldTable.getId())),
-                    new Document("$set", new Document(TableConstants.NAME, newTable.getName()))
+                    new Document(MongoConstants.SET, new Document(TableConstants.NAME, newTable.getName()))
             ).wasAcknowledged();
         }
         return false;
@@ -74,9 +77,9 @@ public class TableDAOImpl implements TableDAO {
         if (Objects.nonNull(table)) {
             if (addToArchive(table))
                 return tables.deleteOne(new Document(TableConstants.ID, new ObjectId(table.getId()))).wasAcknowledged();
-            System.out.println("Failed To archive table");
+            System.out.println(MessageConstants.TABLE_ARCHIVE_FAILED);
         }
-        System.out.println("Failed to delete table, empty table.");
+        System.out.println(MessageConstants.TABLE_DELETE_FAILED);
         return false;
     }
 

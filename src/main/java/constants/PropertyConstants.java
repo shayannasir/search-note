@@ -8,4 +8,5 @@ public class PropertyConstants {
     public static final String MONGO_COL_TABLE = "tables";
     public static final String MONGO_COL_ARCHIVED_TABLE = "archived_tables";
     public static final String MONGO_COL_ENTRY = "entries";
+    public static final String MONGO_COL_ARCHIVED_ENTRY = "archived_entries";
 }

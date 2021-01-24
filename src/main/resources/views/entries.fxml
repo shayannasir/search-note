@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680" prefWidth="950" stylesheets="@../stylesheets/entry.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.EntryController">
+   <children>
+      <TextField fx:id="entrySearch" alignment="CENTER" layoutX="30.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#checkKeyCombination" onKeyTyped="#searchEntryValChanged" prefHeight="30.0" prefWidth="470.0" promptText="Search..." AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Separator layoutX="20.0" layoutY="56.0" prefHeight="3.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Text fx:id="tableName" layoutX="20.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="63.93310546875" />
+      <Text fx:id="tableId" layoutX="551.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.2705078125" AnchorPane.topAnchor="64.93310546875" />
+      <TableView fx:id="viewTable" layoutY="85.0" onKeyPressed="#itemSelected" prefHeight="315.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+        <columns>
+            <TableColumn fx:id="keyCol" minWidth="100.0" prefWidth="250.0" text="KEY" />
+            <TableColumn fx:id="valCol" minWidth="100.0" prefWidth="450.0" text="VALUE" />
+            <TableColumn fx:id="descCol" minWidth="0.0" prefWidth="245.0" text="DESCRIPTION" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
