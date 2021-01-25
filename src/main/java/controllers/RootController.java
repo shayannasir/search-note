@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +31,8 @@ public class RootController {
 
     public static final String ENTRIES_VIEW_PATH = "/views/entries.fxml";
 
+    @FXML
+    public AnchorPane anchorPane;
     @FXML
     public TextField search;
     @FXML
@@ -76,15 +80,20 @@ public class RootController {
     @FXML
     public void checkKeyCombination(KeyEvent keyEvent) {
         String entry = search.getText();
-        if (!entry.isBlank()) {
-            if (new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+        if (new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            if (!entry.isBlank()) {
                 handleNewInsertion(entry);
                 keyEvent.consume();
-            } else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
-                // not working rn
-                closeStage();
-                keyEvent.consume();
             }
+        } else if (new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
+            closeStage();
+            keyEvent.consume();
+        } else if (keyEvent.getCode() == KeyCode.DOWN) {
+            Platform.runLater(() -> {
+                viewList.requestFocus();
+                viewList.getSelectionModel().select(0);
+                viewList.getFocusModel().focus(0);
+            });
         }
     }
 

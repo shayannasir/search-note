@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,6 +28,8 @@ public class EntryController {
     private Table parentTable;
     private ObservableList<Entry> entryList = FXCollections.observableArrayList();
 
+    @FXML
+    public AnchorPane anchorPane;
     @FXML
     public Text tableId;
     @FXML
@@ -60,6 +63,12 @@ public class EntryController {
                 && !keyword.isBlank()) {
             handleNewInsertion(keyword);
             keyEvent.consume();
+        } else if (keyEvent.getCode() == KeyCode.DOWN) {
+            Platform.runLater(() -> {
+                viewTable.requestFocus();
+                viewTable.getSelectionModel().select(0);
+                viewTable.getFocusModel().focus(0);
+            });
         }
     }
 
