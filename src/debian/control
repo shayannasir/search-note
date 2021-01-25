@@ -1,0 +1,12 @@
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: Syed Shayan Nasir <shayan@live.in>
+Description: Search Based Note
+ A Note taking application that is
+ optimised for searching.
+ .
+ Build with keyboard(only for now) use cases in mind,
+ the application is a perfect fit for the typing-enthusiasts.
+Depends: openjdk-11-jre, mongodb-org
+Homepage: http://search-note.shayannasir.tech

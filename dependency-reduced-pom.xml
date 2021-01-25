@@ -4,7 +4,7 @@
   <groupId>tech.shayannasir</groupId>
   <artifactId>search-note</artifactId>
   <name>Search Note</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -38,6 +38,23 @@
               <mainClass>Main</mainClass>
             </manifest>
           </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>my-exec</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>${project.basedir}/src/debian/package-deb.sh</executable>
         </configuration>
       </plugin>
     </plugins>

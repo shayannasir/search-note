@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Search Note
+Comment=Note Taking Application optimised for Search
+Exec=/usr/bin/search-note
+Icon=/usr/share/doc/search-note/search-note.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Utility;Development;Education;Office
+StartupNotify=true
