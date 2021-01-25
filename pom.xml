@@ -5,7 +5,7 @@
 <groupId>tech.shayannasir</groupId>
 <artifactId>search-note</artifactId>
 <packaging>jar</packaging>
-<version>1.0.0</version>
+<version>0.8.0</version>
 <name>Search Note</name>
 <url>http://maven.apache.org</url>
 
