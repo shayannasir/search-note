@@ -19,7 +19,7 @@ public class DBManager {
         if (Objects.isNull(searchNoteDb)) {
             try {
                 System.out.println("Initiating Database connection");
-                MongoClient mongoClient = MongoClients.create(new ConnectionString(PropertyConstants.MONGO_CONNECTION_STRING));
+                MongoClient mongoClient = MongoClients.create(new ConnectionString(PropertyConstants.REMOTE_CONNECTION_STRING));
                 searchNoteDb = mongoClient.getDatabase(PropertyConstants.MONGO_DB);
                 System.out.println("Connected to " + searchNoteDb.getName() + " database");
             } catch (Exception e) {

@@ -11,6 +11,7 @@ import constants.TableConstants;
 import persistence.DBManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import utility.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public List<Table> findAllByKeyword(String keyword) {
         List<Table> tableList = new ArrayList<>();
-        FindIterable<Document> query = tables.find(new Document(TableConstants.NAME, new Document(MongoConstants.REGEX, keyword).append(MongoConstants.OPTIONS, "i"))).sort(new Document(TableConstants.NAME, 1));
+        FindIterable<Document> query = tables.find(new Document(TableConstants.NAME, new Document(MongoConstants.REGEX, keyword).append(MongoConstants.OPTIONS, "i")).append(TableConstants.USER_ID, Context.getInstance().getUser().getId())).sort(new Document(TableConstants.NAME, 1));
         for (Document document : query) {
             String name = document.get(TableConstants.NAME).toString();
             String id = document.get(TableConstants.ID).toString();
@@ -37,7 +38,7 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public List<Table> findAll() {
         List<Table> tableList = new ArrayList<>();
-        for (Document document : tables.find().sort(new Document(TableConstants.NAME, 1))) {
+        for (Document document : tables.find(new Document(TableConstants.USER_ID, Context.getInstance().getUser().getId())).sort(new Document(TableConstants.NAME, 1))) {
             String name = document.get(TableConstants.NAME).toString();
             String id = document.get(TableConstants.ID).toString();
             tableList.add(new Table(id, name));
@@ -53,7 +54,7 @@ public class TableDAOImpl implements TableDAO {
     @Override
     public Boolean addTable(Table newTable) {
         try {
-            tables.insertOne(new Document(TableConstants.NAME, newTable.getName()));
+            tables.insertOne(new Document(TableConstants.NAME, newTable.getName()).append(TableConstants.USER_ID, Context.getInstance().getUser().getId()));
             return true;
         } catch (Exception e) {
             return false;
@@ -90,6 +91,7 @@ public class TableDAOImpl implements TableDAO {
                         new Document(TableConstants.ID, table.getId())
                                 .append(TableConstants.NAME, table.getName())
                                 .append(TableConstants.ARCHIVED, table.getArchived())
+                                .append(TableConstants.USER_ID, Context.getInstance().getUser().getId())
                 );
                 return true;
             } catch (Exception e) {

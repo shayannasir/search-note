@@ -12,16 +12,18 @@ public class SearchNote extends Application {
 
     public static final String ENTRY_VIEW_PATH = "/views/entries.fxml";
     public static final String TABLE_VIEW_PATH = "/views/root.fxml";
+    public static final String AUTH_VIEW_PATH = "/views/auth.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setScene(loadTableScene());
+        primaryStage.setScene(loadAuthScene());
 
         primaryStage.setTitle(MessageConstants.HOME);
         primaryStage.centerOnScreen();
-        primaryStage.setHeight(650);
-        primaryStage.setWidth(850);
+        primaryStage.setResizable(false);
+        primaryStage.setHeight(330);
+        primaryStage.setWidth(285);
         primaryStage.show();
 
     }
@@ -38,6 +40,12 @@ public class SearchNote extends Application {
         System.out.println(MessageConstants.APP_STOPPING);
         Thread.sleep(100);
         System.out.println(MessageConstants.APP_STOPPED);
+    }
+
+    private Scene loadAuthScene() throws IOException {
+        Parent auth = FXMLLoader.load(getClass().getResource(AUTH_VIEW_PATH));
+        return new Scene(auth);
+
     }
 
     private Scene loadTableScene() throws IOException {

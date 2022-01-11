@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="285.0" stylesheets="@../stylesheets/form.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
+   <children>
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="40.0" text="Username" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0" />
+      <Label fx:id="passLabel" layoutX="17.0" layoutY="127.0" text="Password" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="120.0" />
+      <TextField fx:id="username" layoutX="13.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="213.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="60.0" />
+      <PasswordField fx:id="password" layoutX="13.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="213.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="145.0" />
+      <Button fx:id="login" layoutX="186.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginUser" prefHeight="30.0" prefWidth="89.0" text="LOGIN" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="12.0" />
+         </font></Button>
+      <Text fx:id="errorText" fill="#c90000" layoutX="14.0" layoutY="204.138671875" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="249.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="193.0">
+         <font>
+            <Font size="12.0" />
+         </font></Text>
+      <Button fx:id="register" layoutX="66.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#registerUser" prefHeight="30.0" prefWidth="95.0" text="REGISTER" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -12,5 +12,8 @@ public class MessageConstants {
     public static final String TABLE_DELETE_FAILED = "Failed to delete table";
     public static final String ENTRY_ARCHIVED_FAILED = "Failed To archive entry";
     public static final String ENTRY_DELETE_FAILED = "Failed to delete entry";
+    public static final String USERNAME_INVALID = "Username accepts only numbers and characters (3-20 characters)";
+    public static final String PASSWORD_INVALID = "Accepted password length: 8-20 characters";
+
 
 }

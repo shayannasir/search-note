@@ -39,7 +39,8 @@ public class RootController {
     public ListView<Table> viewList;
     @FXML
     public Text status;
-
+    @FXML
+    public Text placeholder;
     @FXML
     public void initialize() {
         populateList();
@@ -106,6 +107,8 @@ public class RootController {
     private void populateList() {
         list.clear();
         list.addAll(tableDAO.findAll());
+        if (list.size() > 0)
+            placeholder.setVisible(false);
         viewList.setItems(list);
     }
 
@@ -165,6 +168,7 @@ public class RootController {
             Parent entryScene = loader.load();
             EntryController entryController = loader.getController();
             entryController.setParentTable(table);
+            entryStage.setTitle("Entry View");
             entryStage.setScene(new Scene(entryScene));
             entryStage.centerOnScreen();
             entryStage.show();

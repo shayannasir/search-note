@@ -92,12 +92,12 @@ public class EntryController {
             handleUpdate(selected);
         } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
             if (Utility.setToClipboard(selected.getValue())) {
-                status.setText(selected.getValue());
+                status.setText(textWithEllipse(selected.getValue()));
                 keyEvent.consume();
             }
         } else if (new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN).match(keyEvent)) {
             if (Utility.setToClipboard(selected.getKey())) {
-                status.setText(selected.getKey());
+                status.setText(textWithEllipse(selected.getKey()));
                 keyEvent.consume();
             }
         } else if (new KeyCodeCombination(KeyCode.DELETE, KeyCombination.CONTROL_DOWN).match(keyEvent)) {
@@ -243,5 +243,13 @@ public class EntryController {
     private void closeStage() {
         Stage activeStage = (Stage) entrySearch.getScene().getWindow();
         activeStage.close();
+    }
+
+    private String textWithEllipse(String text) {
+        text = text.replaceAll("\n", " ");
+        if (text.trim().length() > 100) {
+            return text.trim().substring(0, 97) + "...";
+        }
+        return text;
     }
 }

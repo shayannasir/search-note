@@ -5,6 +5,7 @@ public class Table {
     private String id;
     private String name;
     private Boolean archived;
+    private String userID;
 
     public Table(String name) {
         this.name = name;
@@ -37,6 +38,14 @@ public class Table {
 
     public void setArchived(Boolean archived) {
         this.archived = archived;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     @Override

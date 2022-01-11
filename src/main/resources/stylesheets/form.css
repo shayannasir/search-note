@@ -1,0 +1,23 @@
+#anchorPane {
+    -fx-background-color: #333333;
+}
+
+#username,
+#password {
+    -fx-background-color: #333333;
+    -fx-border-color: #777777;
+    -fx-border-radius: 3px;
+    -fx-padding: 6px;
+    -fx-text-fill: #c2c2c2;
+}
+
+#nameLabel,
+#passLabel {
+    -fx-text-fill: #d5d5d5;
+}
+#login {
+    -fx-background-color: #37ff9a;
+}
+#register {
+    -fx-background-color: #cbcbcb;
+}
