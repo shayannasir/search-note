@@ -3,7 +3,7 @@
 echo "Initialising .deb packaging.."
 
 PACKAGE_NAME="search-note"
-PACKAGE_VERSION="0.8.0"
+PACKAGE_VERSION="0.9.0"
 BASE=$PACKAGE_NAME-$PACKAGE_VERSION
 
 mkdir -p src/debian/$BASE/DEBIAN
